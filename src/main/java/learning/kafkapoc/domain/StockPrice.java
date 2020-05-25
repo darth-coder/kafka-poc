@@ -1,12 +1,28 @@
 package learning.kafkapoc.domain;
 
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvDate;
+
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+
+@Entity
 public class StockPrice {
 
+    @CsvBindByName(required = true, column = "stockSymbol")
     String stockSymbol;
+
+    @CsvBindByName(required = true, column = "date")
+    @CsvDate("yyyy-MM-dd")
     LocalDate date;
+
+    @CsvBindByName(required = true, column = "price")
     Double price;
+
+    public StockPrice() {
+
+    }
 
     public StockPrice(String stockSymbol, LocalDate date, Double price) {
         this.stockSymbol = stockSymbol;

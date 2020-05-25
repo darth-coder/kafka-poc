@@ -11,6 +11,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +20,9 @@ import java.util.Properties;
 
 @Component
 public class StockPriceWriterImpl implements StockPriceWriter {
+
+    @Value("${writeStockPriceToKafka}")
+    private Boolean writeStockPriceToKafka;
 
     private static Logger logger = LogManager.getLogger(StockPriceWriterImpl.class);
 
@@ -59,6 +63,8 @@ public class StockPriceWriterImpl implements StockPriceWriter {
     }
 
     private void pushToKafka(StockPrice stockPrice) {
+        if(!writeStockPriceToKafka)
+            return;
         ProducerRecord<String, StockPrice> record = new ProducerRecord<>(topicName, stockPrice);
         kafkaProducer.send(record, onCompletion);
         kafkaProducer.flush();
