@@ -37,4 +37,12 @@ public class StockPrice {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    public StockPrice(StockPrice stockPrice) {
+        this.stockSymbol = stockPrice.stockSymbol;
+        this.date = stockPrice.date;
+        if(stockPrice.price != null) {
+            this.price = Double.valueOf(stockPrice.price);
+        }
+    }
 }

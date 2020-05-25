@@ -1,6 +1,7 @@
 package learning.kafkapoc.dao;
 
 import learning.kafkapoc.domain.StockPrice;
+import learning.kafkapoc.utils.StockPriceTestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,15 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.time.LocalDate;
 
-@Transactional  
+@Transactional
 @SpringBootTest
 public class StockPriceDaoTest {
 
     @Inject
     StockPriceDao stockPriceDao;
 
-    StockPrice goog = new StockPrice("GOOG", LocalDate.of(2020, 5, 17), 100.0);
-    StockPrice msft = new StockPrice("MSFT", LocalDate.of(2020, 5, 17), 100.0);
+    StockPrice goog = new StockPrice(StockPriceTestUtils.goog);
+    StockPrice msft = new StockPrice(StockPriceTestUtils.msft);
 
     @Test
     void insert(){
