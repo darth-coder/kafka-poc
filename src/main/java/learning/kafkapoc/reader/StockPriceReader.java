@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface StockPriceReader {
     List<StockPrice> read();
+    boolean hasNext();
 }

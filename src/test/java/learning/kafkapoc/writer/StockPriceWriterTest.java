@@ -2,6 +2,7 @@ package learning.kafkapoc.writer;
 
 import learning.kafkapoc.dao.StockPriceDao;
 import learning.kafkapoc.domain.StockPrice;
+import learning.kafkapoc.reader.StockPriceDeserializer;
 import learning.kafkapoc.utils.StockPriceTestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,9 @@ public class StockPriceWriterTest {
     @Test
     public void serializerTest() {
         StockPriceSerializer serializer = new StockPriceSerializer();
-        serializer.serialize("", StockPriceTestUtils.goog).toString();
+        byte[] data = serializer.serialize("", StockPriceTestUtils.goog);
+        StockPriceDeserializer deserializer = new StockPriceDeserializer();
+        StockPrice stockPrice = (StockPrice) deserializer.deserialize("", data);
+        Assertions.assertTrue(stockPrice.equals(StockPriceTestUtils.goog));
     }
 }

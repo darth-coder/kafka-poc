@@ -15,7 +15,9 @@ public class StockPriceService {
     StockPriceWriter stockPriceWriter;
 
     public void run(){
-        stockPriceReader.read().forEach(e -> stockPriceWriter.writeStockPrice(e));
+        while(stockPriceReader.hasNext()) {
+            stockPriceReader.read().forEach(e -> stockPriceWriter.writeStockPrice(e));
+        }
     }
 
 }

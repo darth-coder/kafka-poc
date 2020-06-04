@@ -2,6 +2,7 @@ package learning.kafkapoc.writer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Serializer;
 
@@ -12,9 +13,9 @@ public class StockPriceSerializer implements Serializer {
         public byte[] serialize(String topic, Object data) {
             byte[] retVal = null;
             ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.enable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
+            objectMapper.registerModule(new JavaTimeModule());
             try {
-                retVal = objectMapper.writeValueAsString(data).getBytes();
+                retVal = objectMapper.writeValueAsBytes(data);
             } catch (Exception e) {
                 e.printStackTrace();
             }

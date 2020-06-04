@@ -25,16 +25,22 @@ dependencies {
 	implementation group: 'javax.inject', name: 'javax.inject', version: '1'
 
 	// https://mvnrepository.com/artifact/org.apache.kafka/kafka
-	implementation group: 'org.apache.kafka', name: 'kafka_2.12', version: '0.10.1.1'
+	implementation(group: 'org.apache.kafka', name: 'kafka_2.12', version: '0.10.1.1') {
+		exclude group: 'org.slf4j'
+	}
 
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.5.3'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.0'
 	
 	// https://mvnrepository.com/artifact/com.opencsv/opencsv
 	compile group: 'com.opencsv', name: 'opencsv', version: '5.2'
 
 	// https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
 	compile group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.11.0'
+
 }
 
 test {

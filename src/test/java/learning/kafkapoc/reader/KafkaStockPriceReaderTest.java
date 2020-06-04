@@ -1,19 +1,24 @@
 package learning.kafkapoc.reader;
 
+import learning.kafkapoc.domain.StockPrice;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-public class FeedStockPriceReaderTest {
+import java.util.List;
 
+@SpringBootTest
+public class KafkaStockPriceReaderTest {
     @Autowired
+    @Qualifier("kafkaReader")
     StockPriceReader stockPriceReader;
 
     @Test
     public void test() {
-        Assertions.assertTrue(!stockPriceReader.read().isEmpty());
+        List<StockPrice> prices = stockPriceReader.read();
+        Assertions.assertTrue(!prices.isEmpty());
     }
+
 }

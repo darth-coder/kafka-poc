@@ -21,7 +21,7 @@ import java.util.Properties;
 @Component
 public class StockPriceWriterImpl implements StockPriceWriter {
 
-    @Value("${writeStockPriceToKafka}")
+    @Value("${writeStockPriceToKafka:false}")
     private Boolean writeStockPriceToKafka;
 
     private static Logger logger = LogManager.getLogger(StockPriceWriterImpl.class);
@@ -29,7 +29,8 @@ public class StockPriceWriterImpl implements StockPriceWriter {
     @Autowired
     StockPriceDao stockPriceDao;
 
-    private final String topicName = "test";
+    @Value("${kafka.topic:test}")
+    private String topicName;
 
     KafkaProducer<String, StockPrice> kafkaProducer;
 
@@ -65,6 +66,11 @@ public class StockPriceWriterImpl implements StockPriceWriter {
     private void pushToKafka(StockPrice stockPrice) {
         if(!writeStockPriceToKafka)
             return;
+        try {
+            Thread.sleep(3000L);
+        } catch (InterruptedException e){
+
+        }
         ProducerRecord<String, StockPrice> record = new ProducerRecord<>(topicName, stockPrice);
         kafkaProducer.send(record, onCompletion);
         kafkaProducer.flush();

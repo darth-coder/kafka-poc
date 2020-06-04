@@ -4,6 +4,7 @@ import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 
@@ -60,5 +61,20 @@ public class StockPrice {
         if(stockPrice.price != null) {
             this.price = Double.valueOf(stockPrice.price);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StockPrice that = (StockPrice) o;
+        return stockSymbol.equals(that.stockSymbol) &&
+                date.equals(that.date) &&
+                price.equals(that.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(stockSymbol, date, price);
     }
 }
